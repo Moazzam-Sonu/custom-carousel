@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .j{
+      position: relative;
+    }
+
+
+    /*  for remove navbar on chrome 
+    .jinga::-webkit-scrollbar {
+    display: none;
+}
+
+for firefox
+ .jinga{
+         scrollbar-width: none;
+  -ms-overflow-style: none; 
+    }
+*/
+
+
+    .jinga {
+      color: white;
+      width: 100%;
+      white-space: nowrap;
+      overflow: auto;
+      
+    }
+
+    .inner-jinga {
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .jinga span {
+      display: inline-block;
+      white-space: nowrap;
+      margin-right: 10px; /* Adjust the margin as needed */
+    }
+
+    .scroll-button {
+      width: 30px; /* Adjust the button width */
+      height: 100%;
+      background: #ccc;
+      position: absolute;
+      top: 0;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .scroll-button-left {
+      left: 0;
+    }
+
+    .scroll-button-right {
+      right: 0;
+    }
+
+    .scroll-button:hover {
+      background: #999;
+    }
+    span{
+      color: blue;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="j">
+
+ 
+  <div class="jinga">
+    <div class="scroll-button scroll-button-left" onclick="scrollContent('left')">◀</div>
+    <div class="inner-jinga">
+      <span>.............</span>
+      <span>.............</span>
+      <span>.............</span>
+      <span>.............</span>
+      <span>.............</span>
+      <span>.............</span>
+      <span>.............</span>
+      <span>.............</span>
+      <span>.............</span>
+      <span>.............</span>
+      <span>.............</span>
+      <span>.............</span>
+      <span>.............</span>
+      <span>.............</span>
+      <span>.............</span>
+      <span>.............</span>
+      <span>.............</span>
+      <span>.............</span>
+      <span>.............</span>
+      <span>.............</span>
+      <span>.............</span>
+      <span>.............</span>
+      <span>.............</span>
+      <span>.............</span>
+      <span>.............</span>
+      <span>.............</span>
+      <span>.............</span>
+      <span>.............</span>
+      <span>.............</span>
+      <span>.............</span>
+      <span>.............</span>
+      <!-- Add more spans here -->
+    </div>
+    <div class="scroll-button scroll-button-right" onclick="scrollContent('right')">▶</div>
+  </div>
+</div>
+  <script>
+    const container = document.querySelector('.jinga');
+    const innerJinga = document.querySelector('.inner-jinga');
+    const scrollAmount = (3 * getSpanWidth()) + 3 * 10; // Move 3 spans at a time plus margin
+    const animationDuration = 200; // Duration of the smooth scroll animation in milliseconds
+
+    function scrollContent(direction) {
+      let targetScrollLeft = container.scrollLeft;
+
+      if (direction === 'left') {
+        targetScrollLeft -= scrollAmount;
+      } else if (direction === 'right') {
+        targetScrollLeft += scrollAmount;
+      }
+
+      smoothScroll(container, targetScrollLeft, animationDuration);
+    }
+
+    function getSpanWidth() {
+      const spans = document.querySelectorAll('.jinga span');
+      if (spans.length > 0) {
+        return spans[0].offsetWidth + 10; // Include margin
+      }
+      return 0;
+    }
+
+    function smoothScroll(element, targetScrollLeft, duration) {
+      const startScrollLeft = element.scrollLeft;
+      const startTime = performance.now();
+
+      function step() {
+        const currentTime = performance.now();
+        const progress = Math.min(1, (currentTime - startTime) / duration);
+        element.scrollLeft = startScrollLeft + (targetScrollLeft - startScrollLeft) * progress;
+
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        }
+      }
+
+      requestAnimationFrame(step);
+    }
+  </script>
+</body>
+</html>
